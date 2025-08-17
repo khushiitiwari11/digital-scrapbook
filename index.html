@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Scrapbook</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/blasten/turn.js/turn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body class="text-gray-800 font-sans min-h-screen flex items-center justify-center p-4">
+
+    <!-- Login Page -->
+    <section id="login-page" class="w-full max-w-md bg-white bg-opacity-70 p-8 rounded-xl shadow-2xl backdrop-blur-sm">
+        <h2 class="text-3xl font-bold mb-6 text-[#A43636] flex items-center justify-center gap-2">❤️ Login to Khushi's Scrapbook</h2>
+        <p id="auth-error-message" class="text-red-400 mb-4 text-center hidden"></p>
+        <input type="text" id="username" placeholder="Username" class="w-full p-3 mb-4 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A43636]">
+        <input type="password" id="password" placeholder="Password" class="w-full p-3 mb-4 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A43636]">
+        <button id="login-button" class="w-full p-3 rounded-lg bg-[#A43636] text-white font-bold hover:bg-[#8e2e2e] transition-colors">Login</button>
+        <p class="text-center mt-4 text-gray-700">New user? <span id="register-link" class="link">Register here</span></p>
+    </section>
+
+    <!-- Register Page -->
+    <section id="register-page" class="hidden w-full max-w-md bg-white bg-opacity-70 p-8 rounded-xl shadow-2xl backdrop-blur-sm">
+        <h2 class="text-3xl font-bold mb-6 text-[#A43636]">Register</h2>
+        <p id="register-error-message" class="text-red-400 mb-4 text-center hidden"></p>
+        <input type="text" id="new-username" placeholder="Choose a username" class="w-full p-3 mb-4 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A43636]">
+        <input type="password" id="new-password" placeholder="Choose a password" class="w-full p-3 mb-4 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:focus:ring-[#A43636]">
+        <button id="register-button" class="w-full p-3 rounded-lg bg-[#A43636] text-white font-bold hover:bg-[#8e2e2e] transition-colors">Register</button>
+        <p class="text-center mt-4 text-gray-700">Already have an account? <span id="login-link" class="link">Login here</span></p>
+    </section>
+    
+    <!-- Scrapbook UI -->
+    <section id="scrapbook-ui" class="hidden w-full flex flex-col items-center p-4">
+        <h1 class="text-4xl font-extrabold text-[#A43636] mb-6">My Digital Scrapbook</h1>
+        <div id="scrapbook-container" class="relative">
+            <div id="scrapbook-book" class="hidden">
+                <!-- Pages will be dynamically loaded here -->
+            </div>
+            <div id="loading-message" class="absolute inset-0 flex items-center justify-center text-gray-400 text-xl hidden">
+                Loading memories...
+            </div>
+        </div>
+
+        <!-- Combined Input Form -->
+        <div class="mt-8 w-full max-w-2xl bg-white bg-opacity-70 p-6 rounded-xl shadow-lg">
+            <h2 id="add-entry-heading" class="text-2xl font-bold mb-4 text-gray-700">Save an Entry</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="name-input" placeholder="Your Name" class="col-span-2 md:col-span-1 p-3 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A43636]">
+                <textarea id="memory-input" placeholder="Your favorite memory with me..." class="col-span-2 p-3 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A43636] resize-none h-24"></textarea>
+                <textarea id="hobbies-input" placeholder="Your hobbies..." class="col-span-2 md:col-span-1 p-3 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:focus:ring-[#A43636] resize-none h-24"></textarea>
+                <textarea id="reminder-input" placeholder="A thing that reminds you of me..." class="col-span-2 md:col-span-1 p-3 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:focus:ring-[#A43636] resize-none h-24"></textarea>
+                <input type="text" id="contact-no-input" placeholder="Contact No" class="p-3 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A43636]">
+                <textarea id="call-me-input" placeholder="Can I call you if I ever needed you?" class="p-3 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A43636] resize-none h-24"></textarea>
+                <textarea id="call-you-input" placeholder="Would you ever call me if you were in trouble?" class="p-3 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A43636] resize-none h-24"></textarea>
+                <textarea id="our-bond-input" placeholder="Something specific you would like to write about our bond..." class="p-3 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A43636] resize-none h-32"></textarea>
+                <textarea id="about-me-input" placeholder="Something you would like to write about me..." class="p-3 rounded-lg bg-white bg-opacity-70 text-gray-800 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A43636] resize-none h-32"></textarea>
+            </div>
+            
+            <button id="add-entry-button" class="mt-4 w-full p-3 rounded-lg bg-[#A43636] text-white font-bold hover:bg-[#8e2e2e] transition-colors">
+                Save to Scrapbook
+            </button>
+        </div>
+
+        <div class="scrapbook-controls">
+            <button id="prev-page-button" class="px-4 py-2 bg-gray-400 text-gray-800 rounded-lg hover:bg-gray-500 transition-colors">Previous</button>
+            <button id="logout-button" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">Logout</button>
+            <button id="next-page-button" class="px-4 py-2 bg-gray-400 text-gray-800 rounded-lg hover:bg-gray-500 transition-colors">Next</button>
+        </div>
+    </section>
+    
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
