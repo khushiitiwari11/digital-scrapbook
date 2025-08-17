@@ -3,7 +3,7 @@
 
 // --- Supabase Setup ---
 const SUPABASE_URL = 'https://nxnqjhzzyyoxnkzeddwk.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54bnFqaHp6eXlveG5remVkZHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU0MTAyMTksImV4cCI6MjA3MDk8NjIxOX0.9ZYZwhmKI2iy5znJiTG3z7Wgy9dUMP_l9y1bTyDpmYc';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54bnFqaHp6eXlveG5remVkZHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU0MTAyMTksImV4cCI6MjA3MDk4NjIxOX0.9ZYZwhmKI2iy5znJiTG3z7Wgy9dUMP_l9y1bTyDpmYc';
 
 const { createClient } = supabase;
 const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -248,3 +248,4 @@ const initScrapbook = async () => {
 
 // Initial render check
 document.addEventListener('DOMContentLoaded', renderApp);
+
