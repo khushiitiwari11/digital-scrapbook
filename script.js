@@ -249,3 +249,4 @@ const initScrapbook = async () => {
 // Initial render check
 document.addEventListener('DOMContentLoaded', renderApp);
 
+
