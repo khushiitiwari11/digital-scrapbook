@@ -118,7 +118,7 @@ document.getElementById('add-entry-button').addEventListener('click', async () =
     const { data, error } = await _supabase.from('entries').insert([newEntry]);
 
     if (error) {
-        console.error('Error:', error);
+        console.error('Error saving data:', JSON.stringify(error, null, 2));
         alert("Error saving data. Check the console for details.");
     } else {
         alert("Entry saved to your scrapbook!");
@@ -248,5 +248,6 @@ const initScrapbook = async () => {
 
 // Initial render check
 document.addEventListener('DOMContentLoaded', renderApp);
+
 
 
